@@ -601,7 +601,7 @@ def generate_pdf(pdfmark, pdf, output_pdf):
 def json_mbk(path):
     pdftk_data = call(['pdftk', path, 'dump_data'], 'ascii')
     bookmarks = import_pdftk(pdftk_data)
-    return json.dumps(bookmarks)
+    return bookmarks
 
 
 def main():
