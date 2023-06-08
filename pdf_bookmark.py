@@ -598,6 +598,11 @@ def generate_pdf(pdfmark, pdf, output_pdf):
     os.remove(pdfmark_file)
     os.remove(pdfmark_pagemode)
 
+def json_mbk(path):
+    pdftk_data = call(['pdftk', path, 'dump_data'], 'ascii')
+    bookmarks = import_pdftk(pdftk_data)
+    return json.dumps(bookmarks)
+
 
 def main():
     '''
