@@ -5,7 +5,7 @@ from typing import List, Optional
 from langchain.docstore.document import Document
 from langchain.document_loaders.base import BaseLoader
 
-from pdf_bookmark_master.pdf_bookmark import json_mbk
+from pdf_bookmark import json_mbk
 
 
 class AiFarmTextLoader(BaseLoader, ABC):
