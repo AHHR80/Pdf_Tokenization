@@ -46,6 +46,11 @@ class AiFarmTextLoader(BaseLoader, ABC):
             for ii in re.findall(r'\S*', bmk[i + 1]['title']):
                 pattern2 += (re.escape(ii.replace(':', '')) + '\:*\s*\n*')
 
+            pattern = pattern.replace('\xa0', ' ')
+            pattern2 = pattern2.replace('\xa0', ' ')
+            pattern = pattern[:len(pattern)-1]
+            pattern2 = pattern2[:len(pattern2)-1]
+
             if bmk[i + 1]['page'] - bmk[i]['page'] != 0:
                 page_num = f"{bmk[i]['page']}-{bmk[i + 1]['page']}"
                 source = ''
@@ -63,8 +68,10 @@ class AiFarmTextLoader(BaseLoader, ABC):
                 elif level > bmk[ii]['level']:
                     level -= 1
                     title = bmk[ii]['title'] + ':' + title
-
-            matches = re.findall(pattern + "(.+)\s*\n*" + pattern2, source, flags=re.DOTALL)
+            title = title.replace('\xa0', ' ')
+            print([pattern, '      ', pattern2])
+            # print([bmk[i]['title'], bmk[i]['level'], '         ', bmk[i + 1]['title'], bmk[i + 1]['level']])
+            matches = re.findall(pattern + "(.+)\s*\n*" + pattern2, source, flags=re.DOTALL | re.IGNORECASE)
             pages_with_metadata.append(
                 Document(page_content=matches[0], metadata={'source': self.name, 'title': title, 'page': page_num}))
             # with open('test.txt', 'a+', encoding=self.encoding) as file:
