@@ -33,7 +33,7 @@ may also be OK.
 On Arch Linux, `pdftk-java` could be installed by:
 
 ```shell
-$ sudo pacman -S pdftk java-commons-lang
+$ sudo snap install pdftk
 ```
 
 Verify the installation:
@@ -50,7 +50,7 @@ Ghostscript is used here to import bookmark to pdf file.
 On Arch Linux, it could be installed by:
 
 ```shell
-$ sudo pacman -S ghostscript
+$ sudo apt -y install ghostscript
 ```
 
 Verify the installation:
