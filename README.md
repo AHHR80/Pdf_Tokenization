@@ -1,3 +1,8 @@
+# PDF-Tokenization
+
+This tool tokenize pdf files with pdf bookmarks for Traning LLM Models.
+
+
 # PDF-Bookmark
 
 [![PyPI](https://badge.fury.io/py/pdf-bookmark.svg)](https://pypi.org/project/pdf-bookmark/)
