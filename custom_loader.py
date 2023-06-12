@@ -5,7 +5,7 @@ from typing import List, Optional
 from langchain.docstore.document import Document
 from langchain.document_loaders.base import BaseLoader
 
-from pdf_bookmark import json_mbk
+from pdf_bookmark_master.pdf_bookmark import json_mbk
 
 
 class AiFarmTextLoader(BaseLoader, ABC):
@@ -33,23 +33,24 @@ class AiFarmTextLoader(BaseLoader, ABC):
         with open(self.text_file_path, 'r', encoding=self.encoding) as file:
             source = file.read()
 
-        page_pattern = r'(-+ Page \d+-+\n+)(.*?)(?=\n-+ Page|\Z)'
+        page_pattern = r'(-+ Page \d+-+\n)(.*?)(?=\n-+ Page|\Z)'
         pages = re.findall(page_pattern, source, flags=re.DOTALL)
         pages = [page[1] for page in pages]
         pages.insert(0, '')
+        # print(pages[25])
         pages_with_metadata = []
         for i in range(0, len(bmk) - 1):
             pattern = ''
             for ii in re.findall(r'\S*', bmk[i]['title']):
-                pattern += (re.escape(ii.replace(':', '')) + '\:*\s*\n*')
+                pattern += (re.escape(ii.replace(':', '').replace(',', '')) + '\:*\,*\d*\s*\n*')
             pattern2 = ''
             for ii in re.findall(r'\S*', bmk[i + 1]['title']):
-                pattern2 += (re.escape(ii.replace(':', '')) + '\:*\s*\n*')
+                pattern2 += (re.escape(ii.replace(':', '').replace(',', '')) + '\:*\,*\d*\s*\n*')
 
             pattern = pattern.replace('\xa0', ' ')
             pattern2 = pattern2.replace('\xa0', ' ')
-            pattern = pattern[:len(pattern)-1]
-            pattern2 = pattern2[:len(pattern2)-1]
+            pattern = pattern[:len(pattern) - 1]
+            pattern2 = pattern2[:len(pattern2) - 1]
 
             if bmk[i + 1]['page'] - bmk[i]['page'] != 0:
                 page_num = f"{bmk[i]['page']}-{bmk[i + 1]['page']}"
@@ -69,7 +70,8 @@ class AiFarmTextLoader(BaseLoader, ABC):
                     level -= 1
                     title = bmk[ii]['title'] + ':' + title
             title = title.replace('\xa0', ' ')
-            print([pattern, '      ', pattern2])
+            # print(source)
+            print([pattern, '  ', bmk[i]['page'], '      ', pattern2, '  ', bmk[i + 1]['page']])
             # print([bmk[i]['title'], bmk[i]['level'], '         ', bmk[i + 1]['title'], bmk[i + 1]['level']])
             matches = re.findall(pattern + "(.+)\s*\n*" + pattern2, source, flags=re.DOTALL | re.IGNORECASE)
             pages_with_metadata.append(
