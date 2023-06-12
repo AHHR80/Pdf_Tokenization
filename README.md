@@ -33,7 +33,7 @@ may also be OK.
 On Arch Linux, `pdftk-java` could be installed by:
 
 ```shell
-$ sudo snap install pdftk
+$ sudo apt  install pdftk-java
 ```
 
 Verify the installation:
