@@ -1,7 +1,7 @@
 ### Download
 ```sh
 git clone --recurse-submodules https://github.com/AHHR80/Pdf_Tokenization
-cd LlamaGPTJ-chat
+cd Pdf_Tokenization
 ```
 
 
